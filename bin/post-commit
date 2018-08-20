@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# usage: ln -s $(git rev-parse --show-toplevel)/bin/post-commit $(git rev-parse --show-toplevel)/hooks/post-commit
+
+here=$(readlink -f $(dirname ${BASH_SOURCE}))
+root=$(git rev-parse --show-toplevel)
+blog=$(readlink -f ${root}/blog)
+suffix=${blog##*/}
+bin=${root}/bin
+${bin}/publish.sh

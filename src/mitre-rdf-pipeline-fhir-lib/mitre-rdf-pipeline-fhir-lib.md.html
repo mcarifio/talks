@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Mike Carifio mike@carif.io">
+  <meta name="dcterms.date" content="2018-08-13">
+  <meta name="keywords" content="rdf,shex,translators,fhir,rdf pipline">
+  <title>Translators in the RDF Pipeline</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../slides/reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../slides/reveal.js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '../../slides/reveal.js/css/print/pdf.css' : '../../slides/reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="../../slides/reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Translators in the RDF Pipeline</h1>
+  <p class="author">Mike Carifio <a href="mailto:mike@carif.io">mike@carif.io</a></p>
+  <p class="date">2018-08-13</p>
+</section>
+
+<section class="slide level2">
+
+<!-- pandoc -t revealjs -s -o mitre-rdf-pipeline-fhir-lib.md.html --filter pandoc-include mitre-rdf-pipeline-fhir-lib.md -V revealjs-url=../../slides/reveal.js -->
+<!-- .html.md: pandoc -t revealjs -s -o mitre.md.html mitre-rdf-pipeline-fhir-lib.md -V revealjs-url=../../slides/reveal.js -->
+</section>
+<section id="table-of-contents" class="slide level2">
+<h2>Table of Contents</h2>
+<ul>
+<li><p>Who’s Carif? (4m)</p></li>
+<li><p>What’s the RDF Pipeline project? (5m)</p></li>
+<li><p>A Tale of Two Translators (16m)</p></li>
+</ul>
+</section>
+<section id="carif-bio-timeline-2m" class="slide level2">
+<h2>Carif Bio Timeline (2m)</h2>
+<ul>
+<li><p>BA Math Boston College, MS CS Boston University, MBA candidate at Babson</p></li>
+<li><p>Systems, AI, Financial Reporting at Digital Equipment Corporation</p></li>
+<li><p>Internet startups: OpenMarket, Wandrian, Pazien</p></li>
+<li><p>Journalist/Webmaster at CIO Communications</p></li>
+<li><p>Problem Solver for Hire</p></li>
+<li><p>Sometime manager, player/coach</p></li>
+</ul>
+</section>
+<section id="carif-bio-skillset-2m" class="slide level2">
+<h2>Carif Bio Skillset (2m)</h2>
+<ul>
+<li><p>Linux, TCP/IP, C/C++/python3; bash + packaging</p></li>
+<li><p>Dev side of devops (git, Jenkins, AWS, K8s)</p></li>
+<li><p>Webapps in various platforms (latest: MEAN)</p></li>
+<li><p>Writing; Scrum (standup, jira, etc)</p></li>
+<li><p>Database, SQL and NoSQL</p></li>
+<li><p>First gen AI (expert systems, knowledge representation, LISP, scheme)</p></li>
+<li><p>Calculus, Linear Algebra as needed</p></li>
+<li><p>Java/Scala/Clojure + JVM</p></li>
+<li><p>Windows C# + .Net</p></li>
+</ul>
+</section>
+<section id="rdf-pipeline-3m" class="slide level2">
+<h2>RDF Pipeline (3m)</h2>
+<ul>
+<li><p>VA funded investigation to apply <a href="https://en.wikipedia.org/wiki/Dataflow_programming">dataflow programming</a> to clinical data integration using VistA as the data source.</p></li>
+<li><p>The <a href="http://dbooth.org/2013/dils/pipeline/Booth_pipeline.pdf">RDF pipeline’s</a> features are:</p>
+<ul>
+<li><p>distributed (across machines)</p></li>
+<li><p>opportunistic control (computation done when data arrives)</p></li>
+<li><p>message passing (nodes/workers communicate along edges/channels)</p></li>
+<li><p>RDF (Turtle) describes the pipeline.</p></li>
+<li><p>Typed data passes through the nodes</p></li>
+</ul></li>
+<li><p>Rich model, ambitious project.</p></li>
+</ul>
+</section>
+<section id="rdf-pipeline-example-1m" class="slide level2">
+<h2>RDF Pipeline Example (1m)</h2>
+<figure>
+<img data-src="./rdf-pipeline-example.jpg" alt="rdf pipeline example" /><figcaption>rdf pipeline example</figcaption>
+</figure>
+</section>
+<section id="highlights-2m" class="slide level2">
+<h2>Highlights (2m)</h2>
+<ul>
+<li><p>RDF Pipeline: big project, dataflow, graphs described with turtle, nodes do the processing</p></li>
+<li><p>Nodes can be written in anything that uses <code>stdin/stdout/stderr</code></p>
+<ul>
+<li><p>can be written with “classic” skills in say javascript over nodejs</p></li>
+<li><p>can use more sophisticated pattern matching</p></li>
+<li><p>some nodes have state, some change formats, e.g. Vista -&gt; FHIR</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="a-tail-of-two-transators-2m" class="slide level2">
+<h2>A Tail of Two Transators (2m)</h2>
+<ul>
+<li><p>Claim: pipeline node/process can be written any way. Bake-off!</p></li>
+<li><p>A classic <a href="https://github.com/rdf-pipeline/translators/tree/master/src/js/translate">“functional” transformer</a> (Vista object -&gt; FHIR object) done by me.</p></li>
+<li><p>A <a href="https://github.com/rdf-pipeline/translators/tree/master/src/shex">pattern matcher</a> using <a href="http://shex.io/shex-primer/index.html">Shape Expressions</a> done by <a href="https://www.w3.org/People/Eric/">Eric Gordon Prud’hommeaux</a></p></li>
+</ul>
+</section>
+<section id="functional-transformer-2m" class="slide level2">
+<h2>Functional Transformer (2m)</h2>
+<ul>
+<li><p>Pro: no specialized knowledge beyond javascript 5.1 or es2016 (need some advanced topics: closures, functional programming with underscore).</p></li>
+<li><p>Con: some “advanced” concepts (closures, first class functions, <code>map</code>)</p></li>
+<li><p>Con: underscore (lib) and JSONPath (pattern access in JSON)</p></li>
+<li><p>Pro: Write your own translator by example</p></li>
+<li><p>Con:</p>
+<ul>
+<li><p>single direction (vista-&gt;FHIR one function, FHIR-&gt;vista is another)</p></li>
+<li><p>works best with 1-1 translations (e.g. <code>chcss:Patient-2</code> -&gt; FHIR <code>Patient</code>)</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-chcsspatient-2---fhir-patient-2m" class="slide level2">
+<h2>Example <code>chcss:Patient-2</code> -&gt; FHIR <code>Patient</code> (2m)</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;chcss:Patient-2&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="dt">&quot;_id&quot;</span><span class="fu">:</span> <span class="st">&quot;2-000007&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="dt">&quot;patient_ssn-2&quot;</span><span class="fu">:</span> <span class="st">&quot;777777777&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="dt">&quot;street_address-2&quot;</span><span class="fu">:</span> <span class="st">&quot;100 MAIN ST&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="dt">&quot;city-2&quot;</span><span class="fu">:</span> <span class="st">&quot;ANYTOWN&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="dt">&quot;zip_code-2&quot;</span><span class="fu">:</span> <span class="st">&quot;60040&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="dt">&quot;state-2&quot;</span><span class="fu">:</span> <span class="st">&quot;NY/USA&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="dt">&quot;label&quot;</span><span class="fu">:</span> <span class="st">&quot;BUNNY,BUGS&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="dt">&quot;registration_comment-2&quot;</span><span class="fu">:</span> <span class="st">&quot;fake text&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="dt">&quot;name-2&quot;</span><span class="fu">:</span> <span class="st">&quot;BUNNY,BUGS DOC&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="dt">&quot;phone-2&quot;</span> <span class="fu">:</span> <span class="st">&quot;555 555 5555&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="dt">&quot;office_phone-2&quot;</span> <span class="fu">:</span> <span class="st">&quot;555 555 5556&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">  <span class="dt">&quot;temporary_phone-2&quot;</span> <span class="fu">:</span> <span class="st">&quot;555 555 5555&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">  <span class="dt">&quot;fax_number-2&quot;</span> <span class="fu">:</span> <span class="st">&quot;555 555 5556&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">  <span class="dt">&quot;email_address-2&quot;</span> <span class="fu">:</span> <span class="st">&quot;bugs.bunny@looneytun.es&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="dt">&quot;ssn-2&quot;</span><span class="fu">:</span> <span class="st">&quot;777777777&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="dt">&quot;dod_id_-2&quot;</span><span class="fu">:</span> <span class="st">&quot;7777777770&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">  <span class="dt">&quot;sex-2&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;chcss:2__02_E-MALE&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="dt">&quot;label&quot;</span><span class="fu">:</span> <span class="st">&quot;MALE&quot;</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">  <span class="dt">&quot;marital_status-2&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;11-2&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">    <span class="dt">&quot;label&quot;</span><span class="fu">:</span> <span class="st">&quot;DIVORCED&quot;</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">  <span class="fu">},</span> <span class="er">...</span></a></code></pre></div>
+</section>
+<section id="translated-to-fhir-2m" class="slide level2">
+<h2>… translated to FHIR … (2m)</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">&quot;resourceType&quot;</span><span class="fu">:</span> <span class="st">&quot;Patient&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;urn:local:fhir:Patient:2-000007&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">&quot;identifier&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">      <span class="dt">&quot;use&quot;</span><span class="fu">:</span> <span class="st">&quot;usual&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">        <span class="dt">&quot;coding&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">              <span class="dt">&quot;code&quot;</span><span class="fu">:</span> <span class="st">&quot;chcss&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">              <span class="dt">&quot;display&quot;</span><span class="fu">:</span> <span class="st">&quot;chcss&quot;</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">            <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">        <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">        <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;777777777&quot;</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">      <span class="fu">},</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">      <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="st">&quot;777777777&quot;</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">   <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">   <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">     <span class="dt">&quot;use&quot;</span><span class="fu">:</span> <span class="st">&quot;usual&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">     <span class="dt">&quot;family&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">        <span class="st">&quot;BUNNY&quot;</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">     <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">     <span class="dt">&quot;given&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">       <span class="st">&quot;BUGS DOC&quot;</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">     <span class="ot">]</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">   <span class="fu">},</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">   <span class="dt">&quot;gender&quot;</span><span class="fu">:</span> <span class="st">&quot;male&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">   <span class="dt">&quot;birthDate&quot;</span><span class="fu">:</span> <span class="st">&quot;01-01-1990&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">   <span class="dt">&quot;address&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">     <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">       <span class="dt">&quot;resourceType&quot;</span><span class="fu">:</span> <span class="st">&quot;Address&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33">       <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;postal&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">       <span class="dt">&quot;line&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-35" data-line-number="35">          <span class="st">&quot;100 MAIN ST&quot;</span></a>
+<a class="sourceLine" id="cb2-36" data-line-number="36">       <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-37" data-line-number="37">       <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;ANYTOWN&quot;</span></a>
+<a class="sourceLine" id="cb2-38" data-line-number="38">     <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-39" data-line-number="39">   <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-40" data-line-number="40">   <span class="dt">&quot;maritalStatus&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41">     <span class="dt">&quot;coding&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-42" data-line-number="42">       <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-43" data-line-number="43">          <span class="dt">&quot;system&quot;</span><span class="fu">:</span> <span class="st">&quot;http://hl7.org/fhir/marital-status&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-44" data-line-number="44">          <span class="dt">&quot;code&quot;</span><span class="fu">:</span> <span class="st">&quot;D&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-45" data-line-number="45">          <span class="dt">&quot;display&quot;</span><span class="fu">:</span> <span class="st">&quot;D&quot;</span></a>
+<a class="sourceLine" id="cb2-46" data-line-number="46">       <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-47" data-line-number="47">     <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-48" data-line-number="48">   <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;D&quot;</span></a>
+<a class="sourceLine" id="cb2-49" data-line-number="49">   <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-50" data-line-number="50"><span class="fu">}</span><span class="er">,</span> <span class="er">...</span></a></code></pre></div>
+</section>
+<section id="code-condensed-3m" class="slide level2">
+<h2>… code (condensed, 3m)</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">function</span> <span class="at">simpleTranslate</span>(chcsPatientObject<span class="op">,</span> get) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="co">// The get function knows how to get values from chcsPatientObject using JSONPath.</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="kw">var</span> get <span class="op">=</span> get <span class="op">||</span> <span class="va">Fdt</span>.<span class="at">makeGetter</span>(chcsPatientObject)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="co">// Translate the structure. FHIR keys that aren&#39;t translated are</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="co">// retained as comments. They may be included later as the author</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="co">// learns more.</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    </a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="kw">var</span> result <span class="op">=</span> <span class="va">Fdt</span>.<span class="at">clean</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">        <span class="dt">resourceType</span><span class="op">:</span> RESOURCE_TYPE<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">        <span class="dt">id</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirId</span>(RESOURCE_TYPE<span class="op">,</span> <span class="at">get</span>(<span class="st">&#39;$._id&#39;</span>))<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">        <span class="dt">active</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="co">// if the patient&#39;s chcs record is available, it&#39;s active</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">        <span class="dt">identifier</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirIdentifier</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;ssn-2&#39;]&quot;</span>)<span class="op">,</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;dod_id_-2&#39;]&quot;</span>))<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">        <span class="dt">name</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirHumanName</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;name-2&#39;]&quot;</span>) <span class="op">||</span> <span class="at">get</span>(<span class="st">&#39;$.label&#39;</span>))<span class="op">,</span>  </a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">        <span class="co">// fhir telecom</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">        <span class="dt">telecom</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">            <span class="va">Fdt</span>.<span class="at">fhirContactPoint</span>(<span class="op">{</span><span class="dt">system</span><span class="op">:</span> <span class="st">&#39;phone&#39;</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span> <span class="st">&#39;home&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;phone-2&#39;]&quot;</span>) <span class="op">}</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">            <span class="va">Fdt</span>.<span class="at">fhirContactPoint</span>(<span class="op">{</span><span class="dt">system</span><span class="op">:</span> <span class="st">&#39;phone&#39;</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span> <span class="st">&#39;office&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;office_phone-2&#39;]&quot;</span>)<span class="op">}</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">            <span class="va">Fdt</span>.<span class="at">fhirContactPoint</span>(<span class="op">{</span><span class="dt">system</span><span class="op">:</span> <span class="st">&#39;phone&#39;</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span> <span class="st">&#39;mobile&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;cell_phone-2&#39;]&quot;</span>)<span class="op">}</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">            <span class="va">Fdt</span>.<span class="at">fhirContactPoint</span>(<span class="op">{</span><span class="dt">system</span><span class="op">:</span> <span class="st">&#39;phone&#39;</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span> <span class="st">&#39;temp&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;temporary_phone-2&#39;]&quot;</span>)<span class="op">}</span>)<span class="op">,</span> <span class="co">// no data in chcs database</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">            <span class="va">Fdt</span>.<span class="at">fhirContactPoint</span>(<span class="op">{</span><span class="dt">system</span><span class="op">:</span> <span class="st">&#39;fax&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;fax_number-2&#39;]&quot;</span>)<span class="op">}</span>)<span class="op">,</span> <span class="co">// no data in chcs database</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">            <span class="va">Fdt</span>.<span class="at">fhirContactPoint</span>(<span class="op">{</span><span class="dt">system</span><span class="op">:</span> <span class="st">&#39;email&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;email_address-2&#39;]&quot;</span>)<span class="op">}</span>) <span class="co">// no data in chcs</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">        ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">        <span class="dt">gender</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirPatientGender</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;sex-2&#39;]&quot;</span>))<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">        <span class="dt">birthDate</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirPatientBirthDate</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;dob-2&#39;]&quot;</span>))<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">        <span class="co">// fhir address</span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">        <span class="dt">address</span><span class="op">:</span> [ <span class="va">Fdt</span>.<span class="at">fhirAddress</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">            <span class="dt">street1</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;street_address-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-30" data-line-number="30">            <span class="dt">street2</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;street_address-2-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">            <span class="dt">street3</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;street-address-2-3&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-32" data-line-number="32">            <span class="dt">city</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;city-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33">            <span class="dt">state</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirPatientState</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;state-2&#39;]&quot;</span>))<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-34" data-line-number="34">            <span class="dt">country</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirPatientCountry</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;state-2&#39;]&quot;</span>))<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-35" data-line-number="35">            <span class="dt">county</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;county-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-36" data-line-number="36">            <span class="dt">zip</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;zip_code-2&#39;]&quot;</span>)</a>
+<a class="sourceLine" id="cb3-37" data-line-number="37">        <span class="op">}</span>) ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-38" data-line-number="38">        <span class="dt">maritalStatus</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirMaritalStatus</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;marital_status-2&#39;]&quot;</span>))<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-39" data-line-number="39">        <span class="dt">contact</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">clean</span>([</a>
+<a class="sourceLine" id="cb3-40" data-line-number="40">            <span class="op">{</span> <span class="co">// A contact party (e.g. guardian, partner, friend) for the patient</span></a>
+<a class="sourceLine" id="cb3-41" data-line-number="41">                <span class="dt">relationship </span><span class="op">:</span> [ <span class="va">Fdt</span>.<span class="at">fhirCodeableConcept</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;erelationship-2&#39;]&quot;</span>)) ]<span class="op">,</span> <span class="co">// The kind of relationship</span></a>
+<a class="sourceLine" id="cb3-42" data-line-number="42">                <span class="dt">name</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirHumanName</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;emergency_contact-2&#39;]&quot;</span>))<span class="op">,</span> <span class="co">// A name associated with the contact person</span></a>
+<a class="sourceLine" id="cb3-43" data-line-number="43">                <span class="dt">telecom</span><span class="op">:</span> [ <span class="va">Fdt</span>.<span class="at">fhirContactPoint</span>(<span class="op">{</span><span class="dt">system</span><span class="op">:</span> <span class="st">&#39;phone&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;ephone-2&#39;]&quot;</span>)<span class="op">}</span>) ]<span class="op">,</span> <span class="co">// A contact detail for the person</span></a>
+<a class="sourceLine" id="cb3-44" data-line-number="44">                <span class="dt">address</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirAddress</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-45" data-line-number="45">                    <span class="dt">street1</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;estreet_address-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-46" data-line-number="46">                    <span class="dt">street2</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;estreet_address_2-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-47" data-line-number="47">                    <span class="dt">street3</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;estreet_address_3-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-48" data-line-number="48">                    <span class="dt">city</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;ecity-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-49" data-line-number="49">                    <span class="dt">state</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;estate-2&#39;]&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-50" data-line-number="50">                    <span class="dt">zip</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;ezip-2&#39;]&quot;</span>)</a>
+<a class="sourceLine" id="cb3-51" data-line-number="51">                <span class="op">}</span>) <span class="co">// Address for the contact person</span></a>
+<a class="sourceLine" id="cb3-52" data-line-number="52">                <span class="co">// gender: &quot;&lt;code&gt;&quot;, // male | female | other | unknown</span></a>
+<a class="sourceLine" id="cb3-53" data-line-number="53">                <span class="co">// organization: { Reference(Organization) }, // C? Organization that is associated with the contact</span></a>
+<a class="sourceLine" id="cb3-54" data-line-number="54">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-55" data-line-number="55">        ])<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-56" data-line-number="56">        <span class="dt">communication</span><span class="op">:</span> [ <span class="va">Fdt</span>.<span class="at">fhirCodeableConcept</span>(<span class="st">&#39;English&#39;</span>)]<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-57" data-line-number="57">        <span class="co">// fhir careProvider</span></a>
+<a class="sourceLine" id="cb3-58" data-line-number="58">        <span class="dt">careProvider</span><span class="op">:</span> [<span class="va">Fdt</span>.<span class="at">fhirReferencePractioner</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;health_care_provider-2&#39;]&quot;</span>))]<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-59" data-line-number="59">        <span class="co">// fhir managingOrganization -- VA</span></a>
+<a class="sourceLine" id="cb3-60" data-line-number="60">        <span class="dt">managingOrganization</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirReferenceOrganization</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-61" data-line-number="61">            <span class="dt">name</span><span class="op">:</span> <span class="at">get</span>(<span class="st">&quot;$[&#39;health_care_provider-2&#39;]&quot;</span>)</a>
+<a class="sourceLine" id="cb3-62" data-line-number="62">        <span class="op">}</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-63" data-line-number="63">        <span class="co">// fhir link</span></a>
+<a class="sourceLine" id="cb3-64" data-line-number="64">        <span class="dt">link</span><span class="op">:</span> [ <span class="op">{</span><span class="dt">other</span><span class="op">:</span> <span class="va">Fdt</span>.<span class="at">fhirReferencePatient</span>(<span class="at">get</span>(<span class="st">&quot;$[&#39;correct_patient-2&#39;]&quot;</span>))<span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">&#39;replace&#39;</span><span class="op">}</span> ]</a>
+<a class="sourceLine" id="cb3-65" data-line-number="65">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-66" data-line-number="66">    <span class="cf">return</span> result<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-67" data-line-number="67"><span class="op">}</span></a></code></pre></div>
+</section>
+<section id="observations-2m" class="slide level2">
+<h2>Observations (2m)</h2>
+<ul>
+<li><p>Functional tranlators used <a href="https://github.com/json-path/JsonPath">JSONPath</a> to dig into the input structure for values.</p></li>
+<li><p>Two passes:</p>
+<ul>
+<li><p>All FHIR attributes are created but populated with <code>null</code></p></li>
+<li><p>All <code>null</code> valued pairs are removed</p></li>
+</ul></li>
+<li><p>Every supported FHIR “concept” had an associated function, e.g. <code>Fdt.fhirMaritalStatus</code></p></li>
+</ul>
+</section>
+<section id="pattern-matcher-2m" class="slide level2">
+<h2>Pattern Matcher (2m)</h2>
+<ul>
+<li><p>Pro: Bi-direction (chcss &lt;-&gt; FHIR) with the same mapping <code>.shex</code> file</p></li>
+<li><p>Pro: Could report “well-formedness” in addition to transformations.</p></li>
+<li><p>Pro: Dense and declarative mapping.</p></li>
+<li><p>Con: A new language (including syntax and semantics)</p></li>
+</ul>
+</section>
+<section id="same-example-as-above-2m" class="slide level2">
+<h2>Same Example As Above (2m)</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" data-line-number="1">﻿PREFIX fhir<span class="op">:</span> <span class="op">&lt;</span>http<span class="op">:</span><span class="co">//hl7.org/fhir/&gt; </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">PREFIX fhirvs<span class="op">:</span> <span class="op">&lt;</span>http<span class="op">:</span><span class="co">//hl7.org/fhir/ValueSet/&gt;</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">PREFIX Map<span class="op">:</span> <span class="op">&lt;</span>http<span class="op">:</span><span class="co">//shex.io/extensions/Map/#&gt;</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">PREFIX dem<span class="op">:</span> <span class="op">&lt;</span>urn<span class="op">:</span>local<span class="op">:</span>Demographics<span class="op">:&gt;</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">PREFIX xsd<span class="op">:</span> <span class="op">&lt;</span>http<span class="op">:</span><span class="co">//www.w3.org/2001/XMLSchema#&gt; </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">BASE <span class="op">&lt;</span>http<span class="op">:</span><span class="co">//hl7.org/fhir/shape/&gt;</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">start<span class="op">=</span>@<span class="op">&lt;</span>Patient<span class="op">&gt;</span>                         # AND <span class="op">{</span><span class="dt">fhir</span><span class="op">:</span>nodeRole [<span class="dt">fhir</span><span class="op">:</span>treeRoot]<span class="op">}</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="op">&lt;</span>Patient<span class="op">&gt;</span> CLOSED <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">    a [<span class="dt">fhir</span><span class="op">:</span>Patient]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">    <span class="dt">fhir</span><span class="op">:</span>nodeRole [<span class="dt">fhir</span><span class="op">:</span>treeRoot]<span class="op">?;</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">    # fhir:<span class="va">Patient</span>.<span class="at">identifier</span> @<span class="op">&lt;</span>Identifier<span class="op">&gt;*;</span>    # An identifier <span class="cf">for</span> <span class="kw">this</span> patient</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">    <span class="dt">fhir</span><span class="op">:</span><span class="va">Patient</span>.<span class="at">identifier</span>  <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">    a [<span class="dt">fhir</span><span class="op">:</span>Identifier]<span class="op">?;</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">      fhir:<span class="va">Identifier</span>.<span class="at">system</span>    <span class="op">{</span> <span class="dt">fhir</span><span class="op">:</span>value IRI <span class="op">%</span><span class="dt">Map</span><span class="op">:{</span> <span class="dt">dem</span><span class="op">:</span>constIdentifierSysChcs <span class="op">%}</span> <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">      <span class="dt">fhir</span><span class="op">:</span><span class="va">Identifier</span>.<span class="at">value</span>     <span class="op">{</span> <span class="dt">fhir</span><span class="op">:</span>value <span class="dt">xsd</span><span class="op">:</span>string  <span class="op">%</span><span class="dt">Map</span><span class="op">:{</span> <span class="dt">dem</span><span class="op">:</span>id <span class="op">%}</span> <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">    <span class="op">}*;</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">    # <span class="dt">fhir</span><span class="op">:</span><span class="va">Patient</span>.<span class="at">name</span> @<span class="op">&lt;</span>HumanName<span class="op">&gt;*;</span>          # A name associated <span class="cf">with</span> the patient</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">    <span class="dt">fhir</span><span class="op">:</span><span class="va">Patient</span>.<span class="at">name</span> <span class="op">{</span> </a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">       <span class="dt">fhir</span><span class="op">:</span><span class="va">HumanName</span>.<span class="at">use</span>    <span class="op">{</span> <span class="dt">fhir</span><span class="op">:</span>value <span class="dt">xsd</span><span class="op">:</span>string<span class="op">?</span> <span class="op">%</span>Map:<span class="op">{</span> <span class="dt">dem</span><span class="op">:</span>constNameUse <span class="op">%}</span> <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">       <span class="dt">fhir</span><span class="op">:</span><span class="va">HumanName</span>.<span class="at">text</span>   <span class="op">{</span> <span class="dt">fhir</span><span class="op">:</span>value <span class="dt">xsd</span><span class="op">:</span>string<span class="op">?</span> <span class="op">%</span>Map:<span class="op">{</span> <span class="dt">dem</span><span class="op">:</span>patient_label <span class="op">%}</span> <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">    <span class="op">}*;</span> </a></code></pre></div>
+</section>
+<section id="conclusions-1m" class="slide level2">
+<h2>Conclusions (1m)</h2>
+<ul>
+<li><p>Mere mortals can map legacy data structures to FHIR using one of several techniques.</p></li>
+<li><p>Direct transformations can get the job done.</p></li>
+<li><p>Pattern matching can make the job easier.</p></li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="../../slides/reveal.js/lib/js/head.min.js"></script>
+  <script src="../../slides/reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '../../slides/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '../../slides/reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '../../slides/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
